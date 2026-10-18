@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bunny Rental - Premium Fashion Clothing Rental</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Font - Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            bunny: {
+              50: '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f9a8d4',
+              400: '#f472b6',
+              500: '#ec4899',
+              600: '#db2777',
+              700: '#be185d',
+              800: '#9d174d',
+              900: '#831843',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #f472b6;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-gradient-to-r from-bunny-600 to-pink-500 text-white text-xs sm:text-sm font-medium text-center py-2 px-4 shadow-sm">
+    <i class="fa-solid fa-wand-magic-sparkles mr-2">classy & effortless fashion!</i> Get 15% OFF on your first rental with code: <span class="underline font-bold">BUNNYNEW</span>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-bunny-500 to-rose-400 flex items-center justify-center text-white shadow-md shadow-bunny-200">
+            <i class="fa-solid fa-rabbit text-xl"></i>
+          </div>
+          <div>
+            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-bunny-600 to-rose-500 bg-clip-text text-transparent">Bunny Rental</span>
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Couture & Style</p>
+          </div>
+        </div>
+
+        <!-- Search Bar (Desktop) -->
+        <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
+          <input 
+            type="text" 
+            id="searchInput"
+            oninput="handleSearch()"
+            placeholder="Search dresses, suits, jackets..." 
+            class="w-full bg-slate-100 border border-slate-200 rounded-full py-2.5 pl-11 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-bunny-400 focus:bg-white transition-all"
+          >
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-sm"></i>
+        </div>
+
+        <!-- Navigation Right Options -->
+        <div class="flex items-center gap-4">
+          <button onclick="toggleCartModal()" class="relative p-2.5 rounded-full bg-slate-100 text-slate-700 hover:bg-bunny-50 hover:text-bunny-600 transition-colors">
+            <i class="fa-solid fa-bag-shopping text-lg"></i>
+            <span id="cartCountBadge" class="hidden absolute -top-1 -right-1 bg-bunny-600 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="relative bg-gradient-to-br from-pink-50 via-rose-50 to-slate-100 py-12 md:py-16 px-4 sm:px-6 lg:px-8 border-b border-pink-100 overflow-hidden">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+      <div class="text-center md:text-left max-w-xl">
+        <span class="inline-block bg-bunny-100 text-bunny-700 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+          <i class="fa-solid fa-sparkles mr-1"></i> Sustainable Glamour
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          Wear Luxury Outfits Without The Luxury Price.
+        </h1>
+        <p class="mt-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+          Rent high-end designer dresses, suits, and accessories for events, galas, or everyday chic styling. Delivered fresh to your doorstep.
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center md:justify-start gap-4 text-xs font-semibold text-slate-500">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-truck-fast text-bunny-500"></i> Free Delivery</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-sparkles text-bunny-500"></i> Dry Cleaned & Ready</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-check text-bunny-500"></i> Fit Guarantee</span>
+        </div>
+      </div>
+      <div class="w-full md:w-auto flex justify-center">
+        <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white rotate-1 hover:rotate-0 transition-transform duration-500">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80" alt="Fashion Model" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
+            <div class="text-white">
+              <p class="text-xs uppercase font-semibold text-pink-300">Featured Designer</p>
+              <p class="text-lg font-bold">Silk Evening Gowns Collection</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CATALOG SECTION -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    
+    <!-- Filter & Category Section -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-slate-200">
+      
+      <!-- Category Buttons -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 custom-scrollbar" id="categoryContainer">
+        <!-- Javascript dynamically inserts buttons here -->
+      </div>
+
+      <!-- Sorting Dropdown -->
+      <div class="flex items-center gap-3 self-end md:self-auto">
+        <label for="sortBy" class="text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">Sort By:</label>
+        <select id="sortBy" onchange="handleSort()" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-bunny-400">
+          <option value="featured">Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Mobile Search input -->
+    <div class="mt-4 md:hidden">
+      <input 
+        type="text" 
+        id="mobileSearchInput"
+        oninput="handleSearch(true)"
+        placeholder="Search catalog..." 
+        class="w-full bg-slate-100 border border-slate-200 rounded-xl py-2.5 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-bunny-400"
+      >
+    </div>
+
+    <!-- Product Grid -->
+    <div id="productGrid" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Dynamic Product Cards Injected via JS -->
+    </div>
+
+    <!-- Empty State Message -->
+    <div id="emptyState" class="hidden text-center py-16">
+      <div class="w-16 h-16 bg-pink-100 text-bunny-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+        <i class="fa-solid fa-shirt"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-800">No items found</h3>
+      <p class="text-slate-500 text-sm mt-1">Try adjusting your filters or search keywords.</p>
+      <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-bunny-600 text-white rounded-xl text-sm font-semibold hover:bg-bunny-700 transition">Reset All Filters</button>
+    </div>
+
+  </main>
+
+  <!-- PRODUCT QUICK VIEW & RENTAL MODAL -->
+  <div id="productModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden relative flex flex-col md:flex-row max-h-[90vh]">
+      
+      <!-- Close Button -->
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 w-9 h-9 bg-white/80 hover:bg-white text-slate-600 rounded-full flex items-center justify-center shadow-md transition-all">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <!-- Modal Image -->
+      <div class="w-full md:w-1/2 bg-slate-100 relative h-72 md:h-auto">
+        <img id="modalImage" src="" alt="" class="w-full h-full object-cover">
+        <div id="modalCategoryBadge" class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-bunny-700 uppercase tracking-wider">
+        </div>
+      </div>
+
+      <!-- Modal Details & Rental Calculator -->
+      <div class="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto custom-scrollbar flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between">
+            <span id="modalBrand" class="text-xs font-bold uppercase tracking-widest text-slate-400"></span>
+            <div class="flex items-center text-amber-400 text-xs font-bold gap-1">
+              <i class="fa-solid fa-star"></i>
+              <span id="modalRating" class="text-slate-700"></span>
+            </div>
+          </div>
+          
+          <h2 id="modalTitle" class="text-2xl font-bold text-slate-800 mt-1"></h2>
+          <p id="modalDescription" class="text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed"></p>
+
+          <hr class="my-5 border-slate-100">
+
+          <!-- Interactive Calculator Controls -->
+          <div class="space-y-4">
+            
+            <!-- Size Selection -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Select Size</label>
+              <div id="sizeOptions" class="flex gap-2">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Rental Duration Picker -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Rental Duration</label>
+              <div class="grid grid-cols-3 gap-2">
+                <button type="button" onclick="setRentalDays(3)" id="duration-3" class="duration-btn py-2 px-3 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 hover:border-bunny-500">3 Days</button>
+                <button type="button" onclick="setRentalDays(5)" id="duration-5" class="duration-btn py-2 px-3 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 hover:border-bunny-500">5 Days</button>
+                <button type="button" onclick="setRentalDays(7)" id="duration-7" class="duration-btn py-2 px-3 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 hover:border-bunny-500">7 Days</button>
+              </div>
+            </div>
+
+            <!-- Date Picker -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Start Date</label>
+              <input type="date" id="startDateInput" onchange="calculatePrice()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-bunny-400">
+            </div>
+
+            <!-- Price Breakdown Calculation -->
+            <div class="bg-pink-50/60 p-4 rounded-2xl border border-pink-100 space-y-2 mt-4">
+              <div class="flex justify-between text-xs text-slate-600">
+                <span>Base Daily Rate:</span>
+                <span id="calcDailyRate" class="font-semibold">$0</span>
+              </div>
+              <div class="flex justify-between text-xs text-slate-600">
+                <span>Duration Multiplier:</span>
+                <span id="calcDays" class="font-semibold">3 Days</span>
+              </div>
+              <div class="flex justify-between text-xs text-slate-600">
+                <span>Dry Cleaning & Insurance:</span>
+                <span class="font-semibold text-emerald-600">INCLUDED</span>
+              </div>
+              <hr class="border-pink-200/60 my-1">
+              <div class="flex justify-between text-base font-extrabold text-slate-900">
+                <span>Total Calculated Rental:</span>
+                <span id="calcTotalPrice" class="text-bunny-600">$0</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Add to Cart / Booking Button -->
+        <button onclick="addToCartFromModal()" class="w-full mt-6 bg-gradient-to-r from-bunny-600 to-rose-500 hover:from-bunny-700 hover:to-rose-600 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-bunny-200 flex items-center justify-center gap-2 transition-all transform active:scale-98">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>Reserve Outfit Now</span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CART / BOOKING BAG MODAL -->
+  <div id="cartModal" class="hidden fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-sm flex justify-end">
+    <div class="bg-white w-full max-w-md h-full flex flex-col justify-between shadow-2xl relative transform transition-transform duration-300">
+      
+      <!-- Cart Header -->
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-bunny-600 text-xl"></i>
+          <h3 class="text-lg font-extrabold text-slate-800">Your Booking Bag</h3>
+        </div>
+        <button onclick="toggleCartModal()" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cartItemsContainer" class="p-6 flex-1 overflow-y-auto space-y-4 custom-scrollbar">
+        <!-- Dynamic Cart Items -->
+      </div>
+
+      <!-- Cart Footer & Checkout -->
+      <div class="p-6 border-t border-slate-100 bg-slate-50 space-y-4">
+        <div class="flex justify-between text-sm text-slate-600">
+          <span>Subtotal</span>
+          <span id="cartSubtotal" class="font-bold text-slate-800">$0.00</span>
+        </div>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span>Refundable Deposit</span>
+          <span class="font-bold text-slate-800">$20.00</span>
+        </div>
+        <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+          <span>Grand Total</span>
+          <span id="cartTotal" class="text-bunny-600">$0.00</span>
+        </div>
+
+        <button onclick="proceedToCheckout()" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-3.5 px-4 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+          <span>Proceed to Booking</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHECKOUT SUCCESS MODAL -->
+  <div id="successModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-8 text-center shadow-2xl relative">
+      <div class="w-20 h-20 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 class="text-2xl font-extrabold text-slate-800">Booking Confirmed!</h3>
+      <p class="text-slate-600 text-sm mt-2">Thank you for choosing Bunny Rental. We've prepared your outfits and sent details to your inbox.</p>
+      
+      <div class="my-6 bg-slate-50 p-4 rounded-2xl border border-slate-100 text-left text-xs space-y-2">
+        <div class="flex justify-between">
+          <span class="text-slate-400">Order Reference:</span>
+          <span class="font-bold text-slate-700" id="orderRef">#BUNNY-98231</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Delivery Status:</span>
+          <span class="font-bold text-emerald-600">Scheduled</span>
+        </div>
+      </div>
+
+      <button onclick="closeSuccessModal()" class="w-full bg-bunny-600 text-white font-bold py-3 rounded-xl shadow-md hover:bg-bunny-700 transition">Back to Catalog</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 py-12 px-4 sm:px-6 lg:px-8 mt-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-xl bg-bunny-500 flex items-center justify-center text-white font-bold">
+            <i class="fa-solid fa-rabbit"></i>
+          </div>
+          <span class="text-white font-extrabold text-lg">Bunny Rental</span>
+        </div>
+        <p class="text-xs leading-relaxed">Rent high-fashion apparel for every occasion. Sustainable, affordable, and effortlessly stylish.</p>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-3">Categories</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" onclick="filterCategory('Evening Dresses')" class="hover:text-white">Evening Dresses</a></li>
+          <li><a href="#" onclick="filterCategory('Suits & Blazers')" class="hover:text-white">Suits & Tuxedos</a></li>
+          <li><a href="#" onclick="filterCategory('Cocktail Outfits')" class="hover:text-white">Cocktail Wear</a></li>
+          <li><a href="#" onclick="filterCategory('Accessories')" class="hover:text-white">Bags & Accessories</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-3">Customer Support</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#" class="hover:text-white">How Rental Works</a></li>
+          <li><a href="#" class="hover:text-white">Size Guide & Fit Guarantee</a></li>
+          <li><a href="#" class="hover:text-white">Return & Cleaning Policy</a></li>
+          <li><a href="#" class="hover:text-white">FAQs</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-3">Newsletter</h4>
+        <p class="text-xs mb-3">Get $10 voucher on your next rental subscription.</p>
+        <div class="flex">
+          <input type="email" placeholder="Enter your email" class="bg-slate-800 text-xs text-white px-3 py-2 rounded-l-xl focus:outline-none w-full border border-slate-700">
+          <button class="bg-bunny-600 hover:bg-bunny-700 text-white px-4 py-2 rounded-r-xl text-xs font-bold transition">Join</button>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto pt-6 border-t border-slate-800 text-center text-xs">
+      &copy; 2026 Bunny Rental Platform. All rights reserved. Designed for chic interactive shopping.
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- SAMPLE CLOTHING PRODUCT DATABASE ---
+    const PRODUCTS = [
+      {
+        id: 1,
+        title: "Elysian Silk Gown",
+        brand: "Maison Luxe",
+        category: "Evening Dresses",
+        pricePerDay: 45,
+        rating: 4.9,
+        image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80",
+        sizes: ["XS", "S", "M"],
+        description: "A breathtaking floor-length satin evening gown designed with a sleek side-slit and elegant draped neckline. Ideal for galas, red carpets, and formal weddings."
+      },
+      {
+        id: 2,
+        title: "Midnight Velvet Tuxedo",
+        brand: "Savile & Co",
+        category: "Suits & Blazers",
+        pricePerDay: 50,
+        rating: 4.8,
+        image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
+        sizes: ["S", "M", "L", "XL"],
+        description: "Tailored deep navy velvet tuxedo with satin lapels. Offers a sharp, modern silhouette for black-tie events and formal celebrations."
+      },
+      {
+        id: 3,
+        title: "Rose Gold Cocktail Dress",
+        brand: "Chic Avenue",
+        category: "Cocktail Outfits",
+        pricePerDay: 35,
+        rating: 4.7,
+        image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=800&q=80",
+        sizes: ["XS", "S", "M", "L"],
+        description: "Shimmering sequin cocktail dress featuring a fitted waist and subtle shimmer. Perfect for evening parties and celebratory dinners."
+      },
+      {
+        id: 4,
+        title: "Emerald Silk Slip Dress",
+        brand: "Satin Dreams",
+        category: "Evening Dresses",
+        pricePerDay: 40,
+        rating: 4.9,
+        image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80",
+        sizes: ["S", "M"],
+        description: "Pure mulberry silk bias-cut slip dress in rich emerald green. Graceful drape with adjustable delicate shoulder straps."
+      },
+      {
+        id: 5,
+        title: "Designer Leather Clutch",
+        brand: "Gucci",
+        category: "Accessories",
+        pricePerDay: 25,
+        rating: 4.9,
+        image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80",
+        sizes: ["One Size"],
+        description: "Classic quilted black leather clutch with gold-tone hardware. The ultimate statement piece for any sophisticated evening look."
+      },
+      {
+        id: 6,
+        title: "Italian Wool Double Blazer",
+        brand: "Armani Style",
+        category: "Suits & Blazers",
+        pricePerDay: 42,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80",
+        sizes: ["M", "L", "XL"],
+        description: "Classic double-breasted beige blazer crafted from Italian virgin wool. Highly versatile for business events or smart-casual occasions."
+      },
+      {
+        id: 7,
+        title: "Boho Floral Maxi Dress",
+        brand: "Free Spirit",
+        category: "Casual Wear",
+        pricePerDay: 28,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1572804013427-4d7ca7268217?auto=format&fit=crop&w=800&q=80",
+        sizes: ["S", "M", "L"],
+        description: "Flowy, breathable chiffon floral print dress with long balloon sleeves. Great for garden parties, brunches, and outdoor events."
+      },
+      {
+        id: 8,
+        title: "Pearl Embellished Mini",
+        brand: "Couture Lab",
+        category: "Cocktail Outfits",
+        pricePerDay: 38,
+        rating: 4.8,
+        image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80",
+        sizes: ["XS", "S"],
+        description: "Sophisticated structured ivory mini dress with subtle pearl trim along the neckline and cuffs."
+      }
+    ];
+
+    // --- APPLICATION STATE ---
+    let currentCategory = "All";
+    let activeProducts = [...PRODUCTS];
+    let selectedProduct = null;
+    let selectedSize = "";
+    let selectedDays = 3;
+    let cart = [];
+
+    // --- INITIALIZATION ---
+    window.addEventListener("DOMContentLoaded", () => {
+      initCategories();
+      renderProducts(activeProducts);
+      setDefaultStartDate();
+    });
+
+    // Set default date picker to tomorrow
+    function setDefaultStartDate() {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dateString = tomorrow.toISOString().split('T')[0];
+      const dateInput = document.getElementById('startDateInput');
+      dateInput.value = dateString;
+      dateInput.min = dateString;
+    }
+
+    // --- CATEGORIES RENDER ---
+    function initCategories() {
+      const categories = ["All", "Evening Dresses", "Suits & Blazers", "Cocktail Outfits", "Casual Wear", "Accessories"];
+      const container = document.getElementById("categoryContainer");
+      
+      container.innerHTML = categories.map(cat => `
+        <button 
+          onclick="filterCategory('${cat}')" 
+          class="category-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+            cat === currentCategory 
+              ? 'bg-bunny-600 text-white shadow-md shadow-bunny-200' 
+              : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+          }"
+        >
+          ${cat}
+        </button>
+      `).join("");
+    }
+
+    // Filter by category
+    function filterCategory(category) {
+      currentCategory = category;
+      initCategories();
+      applyFiltersAndSearch();
+    }
+
+    // Search Handler
+    function handleSearch(isMobile = false) {
+      applyFiltersAndSearch();
+    }
+
+    // Sort Handler
+    function handleSort() {
+      applyFiltersAndSearch();
+    }
+
+    // Apply Filters, Search and Sorting
+    function applyFiltersAndSearch() {
+      const desktopQuery = document.getElementById("searchInput").value.toLowerCase();
+      const mobileQuery = document.getElementById("mobileSearchInput").value.toLowerCase();
+      const searchQuery = desktopQuery || mobileQuery;
+      const sortValue = document.getElementById("sortBy").value;
+
+      let filtered = PRODUCTS.filter(p => {
+        const matchesCategory = currentCategory === "All" || p.category === currentCategory;
+        const matchesSearch = p.title.toLowerCase().includes(searchQuery) || 
+                              p.brand.toLowerCase().includes(searchQuery) ||
+                              p.description.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+      });
+
+      // Sorting Logic
+      if (sortValue === "price-low") {
+        filtered.sort((a, b) => a.pricePerDay - b.pricePerDay);
+      } else if (sortValue === "price-high") {
+        filtered.sort((a, b) => b.pricePerDay - a.pricePerDay);
+      } else if (sortValue === "rating") {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+
+      activeProducts = filtered;
+      renderProducts(filtered);
+    }
+
+    // Reset Filters
+    function resetFilters() {
+      currentCategory = "All";
+      document.getElementById("searchInput").value = "";
+      document.getElementById("mobileSearchInput").value = "";
+      document.getElementById("sortBy").value = "featured";
+      initCategories();
+      renderProducts(PRODUCTS);
+    }
+
+    // --- RENDER PRODUCT GRID ---
+    function renderProducts(items) {
+      const grid = document.getElementById("productGrid");
+      const emptyState = document.getElementById("emptyState");
+
+      if (items.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      grid.innerHTML = items.map(product => `
+        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+          <div class="relative overflow-hidden aspect-[3/4]">
+            <img src="${product.image}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-bunny-700 shadow-sm">
+              ${product.category}
+            </span>
+            <div class="absolute top-3 right-3 bg-slate-900/70 text-amber-400 backdrop-blur px-2 py-1 rounded-lg text-xs font-bold flex items-center gap-1">
+              <i class="fa-solid fa-star"></i>
+              <span class="text-white">${product.rating}</span>
+            </div>
+          </div>
+
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">${product.brand}</span>
+              <h3 class="text-base font-bold text-slate-800 mt-0.5 line-clamp-1">${product.title}</h3>
+              <p class="text-slate-500 text-xs mt-1 line-clamp-2">${product.description}</p>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <div>
+                <span class="text-lg font-extrabold text-bunny-600">$${product.pricePerDay}</span>
+                <span class="text-[11px] text-slate-400">/ day</span>
+              </div>
+              <button onclick="openProductModal(${product.id})" class="bg-slate-100 hover:bg-bunny-600 text-slate-700 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-eye"></i> Rent
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // --- MODAL & CALCULATOR LOGIC ---
+    function openProductModal(id) {
+      selectedProduct = PRODUCTS.find(p => p.id === id);
+      if (!selectedProduct) return;
+
+      selectedSize = selectedProduct.sizes[0];
+      selectedDays = 3;
+
+      document.getElementById("modalImage").src = selectedProduct.image;
+      document.getElementById("modalCategoryBadge").textContent = selectedProduct.category;
+      document.getElementById("modalBrand").textContent = selectedProduct.brand;
+      document.getElementById("modalTitle").textContent = selectedProduct.title;
+      document.getElementById("modalRating").textContent = selectedProduct.rating;
+      document.getElementById("modalDescription").textContent = selectedProduct.description;
+
+      // Render Sizes
+      const sizeContainer = document.getElementById("sizeOptions");
+      sizeContainer.innerHTML = selectedProduct.sizes.map(size => `
+        <button 
+          type="button" 
+          onclick="selectSize('${size}')" 
+          class="size-btn px-3.5 py-1.5 border text-xs font-bold rounded-xl transition-all ${
+            size === selectedSize 
+              ? 'border-bunny-600 bg-bunny-50 text-bunny-600' 
+              : 'border-slate-200 text-slate-600 hover:border-slate-300'
+          }"
+        >
+          ${size}
+        </button>
+      `).join("");
+
+      setRentalDays(3);
+      document.getElementById("productModal").classList.remove("hidden");
+    }
+
+    function closeProductModal() {
+      document.getElementById("productModal").classList.add("hidden");
+    }
+
+    function selectSize(size) {
+      selectedSize = size;
+      const buttons = document.querySelectorAll(".size-btn");
+      buttons.forEach(btn => {
+        if (btn.textContent.trim() === size) {
+          btn.className = "size-btn px-3.5 py-1.5 border text-xs font-bold rounded-xl transition-all border-bunny-600 bg-bunny-50 text-bunny-600";
+        } else {
+          btn.className = "size-btn px-3.5 py-1.5 border text-xs font-bold rounded-xl transition-all border-slate-200 text-slate-600 hover:border-slate-300";
+        }
+      });
+    }
+
+    function setRentalDays(days) {
+      selectedDays = days;
+      [3, 5, 7].forEach(d => {
+        const btn = document.getElementById(`duration-${d}`);
+        if (d === days) {
+          btn.className = "duration-btn py-2 px-3 border-2 border-bunny-600 bg-bunny-50 text-bunny-600 rounded-xl text-xs font-bold shadow-sm";
+        } else {
+          btn.className = "duration-btn py-2 px-3 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 hover:border-bunny-400";
+        }
+      });
+      calculatePrice();
+    }
+
+    function calculatePrice() {
+      if (!selectedProduct) return;
+      
+      const dailyRate = selectedProduct.pricePerDay;
+      let total = dailyRate * selectedDays;
+
+      // Apply small multi-day discount
+      if (selectedDays === 5) total *= 0.9;  // 10% discount for 5 days
+      if (selectedDays === 7) total *= 0.8;  // 20% discount for 7 days
+
+      document.getElementById("calcDailyRate").textContent = `$${dailyRate}/day`;
+      document.getElementById("calcDays").textContent = `${selectedDays} Days`;
+      document.getElementById("calcTotalPrice").textContent = `$${total.toFixed(2)}`;
+    }
+
+    // --- CART SYSTEM ---
+    function addToCartFromModal() {
+      if (!selectedProduct) return;
+
+      const startDate = document.getElementById("startDateInput").value;
+      if (!startDate) {
+        alert("Please select a rental start date.");
+        return;
+      }
+
+      // Calculate total rental price
+      let total = selectedProduct.pricePerDay * selectedDays;
+      if (selectedDays === 5) total *= 0.9;
+      if (selectedDays === 7) total *= 0.8;
+
+      const cartItem = {
+        cartItemId: Date.now(),
+        productId: selectedProduct.id,
+        title: selectedProduct.title,
+        brand: selectedProduct.brand,
+        image: selectedProduct.image,
+        size: selectedSize,
+        days: selectedDays,
+        startDate: startDate,
+        totalPrice: total
+      };
+
+      cart.push(cartItem);
+      updateCartUI();
+      closeProductModal();
+      toggleCartModal();
+    }
+
+    function removeFromCart(cartItemId) {
+      cart = cart.filter(item => item.cartItemId !== cartItemId);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById("cartCountBadge");
+      const container = document.getElementById("cartItemsContainer");
+      
+      badge.textContent = cart.length;
+      if (cart.length > 0) {
+        badge.classList.remove("hidden");
+      } else {
+        badge.classList.add("hidden");
+      }
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-400">
+            <i class="fa-solid fa-bag-shopping text-4xl mb-3"></i>
+            <p class="text-sm font-semibold">Your bag is empty.</p>
+            <p class="text-xs mt-1">Explore our catalog and pick an outfit!</p>
+          </div>
+        `;
+        document.getElementById("cartSubtotal").textContent = "$0.00";
+        document.getElementById("cartTotal").textContent = "$0.00";
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart.map(item => {
+        subtotal += item.totalPrice;
+        return `
+          <div class="flex gap-4 p-3 bg-slate-50 rounded-2xl border border-slate-100 relative">
+            <img src="${item.image}" alt="${item.title}" class="w-16 h-20 object-cover rounded-xl">
+            <div class="flex-1 text-xs space-y-1">
+              <span class="font-bold uppercase tracking-wider text-[9px] text-slate-400">${item.brand}</span>
+              <h4 class="font-bold text-slate-800 text-sm line-clamp-1">${item.title}</h4>
+              <p class="text-slate-500">Size: <span class="font-bold text-slate-700">${item.size}</span> | Duration: <span class="font-bold text-slate-700">${item.days} Days</span></p>
+              <p class="text-slate-500">Starts: <span class="font-semibold text-slate-700">${item.startDate}</span></p>
+              <p class="font-extrabold text-bunny-600 text-sm mt-1">$${item.totalPrice.toFixed(2)}</p>
+            </div>
+            <button onclick="removeFromCart(${item.cartItemId})" class="text-slate-300 hover:text-rose-500 self-start p-1">
+              <i class="fa-solid fa-trash text-xs"></i>
+            </button>
+          </div>
+        `;
+      }).join("");
+
+      const grandTotal = subtotal + 20; // Includes $20 security deposit
+      document.getElementById("cartSubtotal").textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById("cartTotal").textContent = `$${grandTotal.toFixed(2)}`;
+    }
+
+    function toggleCartModal() {
+      const modal = document.getElementById("cartModal");
+      modal.classList.toggle("hidden");
+    }
+
+    // --- CHECKOUT PROCESS ---
+    function proceedToCheckout() {
+      if (cart.length === 0) {
+        return;
+      }
+
+      // Generate Random Order Ref
+      const randomRef = "#BUNNY-" + Math.floor(10000 + Math.random() * 90000);
+      document.getElementById("orderRef").textContent = randomRef;
+
+      // Clear Cart
+      cart = [];
+      updateCartUI();
+      toggleCartModal();
+
+      // Show Success Modal
+      document.getElementById("successModal").classList.remove("hidden");
+    }
+
+    function closeSuccessModal() {
+      document.getElementById("successModal").classList.add("hidden");
+    }
+  </script>
+</body>
+</html>
