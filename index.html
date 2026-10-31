@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunny Rental - Premium Fashion Clothing Rental</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font - Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        bunny: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #f472b6;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-bunny-100 selection:text-bunny-800">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-stone-900 text-stone-200 text-xs py-2 px-4 text-center font-medium tracking-wide">
+        ✨ เช่าชุดออกงานวันนี้ บริการส่งฟรีเมื่อเช่าครบ 1,000 บาทขึ้นไป! | สอบถามคิวชุด Line: @bunnyrental
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo Brand -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="filterCategory('all')">
+                <div class="h-12 w-12 rounded-full overflow-hidden border border-bunny-200 shadow-sm flex items-center justify-center bg-bunny-50">
+                    <!-- แทนที่ src ด้วยชื่อไฟล์โลโก้ของคุณ เช่น logo.png -->
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=200" alt="Bunny Rental Logo" class="h-full w-full object-cover">
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-wider text-stone-900 uppercase">Bunny Rental</span>
+                    <p class="text-[10px] text-bunny-600 font-semibold tracking-widest uppercase">Fashion Rental</p>
+                </div>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm">
+                <a href="#catalog" onclick="filterCategory('all')" class="text-stone-900 hover:text-bunny-600 transition">หน้าแรก</a>
+                <a href="#catalog" onclick="filterCategory('trending')" class="text-bunny-600 font-bold hover:text-bunny-700 transition flex items-center gap-1">
+                    <i class="fa-solid fa-fire text-bunny-500"></i> เสื้อผ้ายอดนิยม
+                </a>
+                <a href="#catalog" onclick="filterCategory('dress')" class="text-stone-600 hover:text-bunny-600 transition">ชุดเดรสออกงาน</a>
+                <a href="#catalog" onclick="filterCategory('set')" class="text-stone-600 hover:text-bunny-600 transition">ชุดเซ็ตแฟชั่น</a>
+                <a href="#catalog" onclick="filterCategory('casual')" class="text-stone-600 hover:text-bunny-600 transition">ชุดคาเฟ่ / เดท</a>
+                <a href="#how-to" class="text-stone-600 hover:text-bunny-600 transition">วิธีเช่าชุด</a>
+            </nav>
+
+            <!-- Actions (Cart & Line) -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="relative p-2.5 rounded-full bg-stone-100 hover:bg-bunny-100 text-stone-700 hover:text-bunny-600 transition">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-bunny-600 text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center shadow-sm">0</span>
+                </button>
+                <a href="https://line.me" target="_blank" class="hidden sm:inline-flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white text-sm font-semibold px-4 py-2.5 rounded-full transition shadow-sm">
+                    <i class="fa-brands fa-line text-lg"></i> แอดไลน์จองคิว
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-b from-bunny-50/60 to-white py-16 lg:py-24 overflow-hidden border-b border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 text-center lg:text-left">
+                <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-bunny-100 text-bunny-800 text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-sparkles"></i> Premium Dress & Outfit Rental
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-stone-900 tracking-tight leading-tight">
+                    เช่าชุดสวยหรูออกงาน <br><span class="text-bunny-600">ในราคาเบาๆ สไตล์คุณ</span>
+                </h1>
+                <p class="text-stone-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
+                    บริการเช่าชุดเดรส ชุดเซ็ตพรีเมียม ถ่ายรูปคาเฟ่ งานแต่ง ปาร์ตี้ สภาพนางฟ้า อัปเดตชุดใหม่ตลอด พร้อมบริการซักรีดสะอาดปลอดภัย
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#catalog" class="w-full sm:w-auto bg-stone-900 hover:bg-bunny-600 text-white font-semibold px-8 py-3.5 rounded-xl transition shadow-lg shadow-stone-900/10 text-center">
+                        เลือกดูชุดทั้งหมด
+                    </a>
+                    <a href="#how-to" class="w-full sm:w-auto bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 font-semibold px-8 py-3.5 rounded-xl transition text-center">
+                        ขั้นตอนการเช่า
+                    </a>
+                </div>
+                <div class="flex items-center justify-center lg:justify-start gap-8 pt-4 border-t border-stone-200/60 text-sm text-stone-500">
+                    <div><strong class="text-stone-900 text-lg block">500+</strong> ชุดให้เลือก</div>
+                    <div><strong class="text-stone-900 text-lg block">3 วัน</strong> ระยะเวลาเช่า</div>
+                    <div><strong class="text-stone-900 text-lg block">100%</strong> ซักอบสะอาดมาตรฐาน</div>
+                </div>
+            </div>
+            <div class="relative flex justify-center">
+                <div class="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=800" alt="Model fashion" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
+                        <span class="bg-bunny-600 text-white text-xs px-2.5 py-1 rounded-md w-fit font-bold mb-2">ยอดฮิตอันดับ 1</span>
+                        <h3 class="text-xl font-bold">White Elegant Dress Set</h3>
+                        <p class="text-stone-200 text-sm">เริ่มต้นเพียง 390.- / 3 วัน</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">แคตตาล็อกชุดเช่าทั้งหมด</h2>
+                <p class="text-stone-500 text-sm mt-1">เลือกหมวดหมู่และสไตล์ชุดที่คุณต้องการได้เลยครับ</p>
+            </div>
+            <!-- Category Filter Buttons -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                <button onclick="filterCategory('all')" id="btn-all" class="category-btn active px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap bg-stone-900 text-white transition shadow-sm">ทั้งหมด</button>
+                <button onclick="filterCategory('trending')" id="btn-trending" class="category-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap bg-stone-100 hover:bg-bunny-100 hover:text-bunny-700 text-stone-700 transition flex items-center gap-1.5"><i class="fa-solid fa-fire text-bunny-500"></i> เสื้อผ้ายอดนิยม</button>
+                <button onclick="filterCategory('dress')" id="btn-dress" class="category-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap bg-stone-100 hover:bg-bunny-100 hover:text-bunny-700 text-stone-700 transition">ชุดเดรสออกงาน</button>
+                <button onclick="filterCategory('set')" id="btn-set" class="category-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap bg-stone-100 hover:bg-bunny-100 hover:text-bunny-700 text-stone-700 transition">ชุดเซ็ตแฟชั่น</button>
+                <button onclick="filterCategory('casual')" id="btn-casual" class="category-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap bg-stone-100 hover:bg-bunny-100 hover:text-bunny-700 text-stone-700 transition">ชุดคาเฟ่ / เดท</button>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Products will be injected by JavaScript -->
+        </div>
+    </section>
+
+    <!-- How to Rent Section -->
+    <section id="how-to" class="bg-stone-100 py-16 border-t border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900">ขั้นตอนการเช่าชุดง่ายๆ ใน 3 นาที</h2>
+                <p class="text-stone-600 text-sm mt-2">สะดวกรวดเร็ว ส่งตรงถึงหน้าบ้านคุณ</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200 text-center space-y-4">
+                    <div class="w-12 h-12 bg-bunny-100 text-bunny-600 font-bold rounded-2xl flex items-center justify-center mx-auto text-xl">1</div>
+                    <h3 class="font-bold text-lg text-stone-900">เลือกชุดและระบุไซส์</h3>
+                    <p class="text-stone-600 text-sm">เลือกชุดที่ถูกใจ กดจองผ่านตะกร้าสินค้า หรือทักแอดมินทาง Line เพื่อเช็คคิววันใช้งาน</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200 text-center space-y-4">
+                    <div class="w-12 h-12 bg-bunny-100 text-bunny-600 font-bold rounded-2xl flex items-center justify-center mx-auto text-xl">2</div>
+                    <h3 class="font-bold text-lg text-stone-900">ชำระเงินและรอรับชุด</h3>
+                    <p class="text-stone-600 text-sm">ชำระค่าเช่า (มีมัดจำชุดคืนเมื่อส่งคืน) ทางร้านจัดส่งพัสดุด่วนถึงหน้าบ้านล่วงหน้าก่อนวันใช้งาน</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200 text-center space-y-4">
+                    <div class="w-12 h-12 bg-bunny-100 text-bunny-600 font-bold rounded-2xl flex items-center justify-center mx-auto text-xl">3</div>
+                    <h3 class="font-bold text-lg text-stone-900">ใส่เที่ยว/ออกงาน แล้วส่งคืน</h3>
+                    <p class="text-stone-600 text-sm">ใส่สวยๆ ถ่ายรูปปังๆ ครบ 3 วันส่งพัสดุกินกลับมาหาเรา (ทางร้านดูแลเรื่องซักรีดให้เองครับ)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-12 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+            <div>
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
+                    <div class="h-10 w-10 rounded-full overflow-hidden bg-bunny-50">
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=200" alt="Logo" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-white font-bold text-lg tracking-wider">Bunny Rental</span>
+                </div>
+                <p class="text-xs text-stone-400">บริการเช่าชุดแฟชั่น ชุดเดรส และชุดออกงานพรีเมียม สภาพดีเยี่ยมสำหรับคุณ</p>
+            </div>
+            <div class="flex justify-center gap-6 text-sm">
+                <a href="#catalog" class="hover:text-white transition">แคตตาล็อกชุด</a>
+                <a href="#how-to" class="hover:text-white transition">ขั้นตอนการเช่า</a>
+                <a href="https://line.me" target="_blank" class="hover:text-white transition">ติดต่อเรา (Line)</a>
+            </div>
+            <div class="text-xs text-stone-500 text-center md:text-right">
+                &copy; 2026 Bunny Rental Fashion. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative space-y-6">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-4">
+                <img id="modal-img" src="" alt="Product" class="w-20 h-24 object-cover rounded-xl border border-stone-200">
+                <div>
+                    <span id="modal-category" class="text-xs font-bold text-bunny-600 uppercase"></span>
+                    <h3 id="modal-title" class="font-bold text-stone-900 text-lg leading-snug"></h3>
+                    <p id="modal-price" class="text-bunny-600 font-bold text-base mt-1"></p>
+                </div>
+            </div>
+            <hr class="border-stone-100">
+            <form id="booking-form" onsubmit="addToCart(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">เลือกไซส์ชุด</label>
+                    <select id="size-select" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-2.5 text-sm font-medium text-stone-800 focus:outline-none focus:border-bunny-500">
+                        <option value="S">Size S (อก 32-33 / เอว 25-26)</option>
+                        <option value="M" selected>Size M (อก 34-35 / เอว 27-28)</option>
+                        <option value="L">Size L (อก 36-37 / เอว 29-30)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">วันที่ต้องการใช้งานชุด (เช่า 3 วัน)</label>
+                    <input type="date" id="rental-date" required class="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-2.5 text-sm font-medium text-stone-800 focus:outline-none focus:border-bunny-500">
+                </div>
+                <button type="submit" class="w-full bg-stone-900 hover:bg-bunny-600 text-white font-bold py-3.5 rounded-xl transition shadow-md">
+                    ยืนยันเพิ่มลงตะกร้าเช่า
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm hidden flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col p-6 overflow-y-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-stone-200">
+                <h3 class="font-extrabold text-xl text-stone-900 flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-bunny-600"></i> ตะกร้าชุดเช่าของฉัน
+                </h3>
+                <button onclick="toggleCart()" class="text-stone-400 hover:text-stone-700 w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="flex-1 py-6 space-y-4 overflow-y-auto">
+                <!-- Cart items will be rendered here -->
+            </div>
+
+            <div class="border-t border-stone-200 pt-4 space-y-4">
+                <div class="flex justify-between items-center text-lg font-bold text-stone-900">
+                    <span>ยอดรวมทั้งหมด:</span>
+                    <span id="cart-total" class="text-bunny-600">฿0</span>
+                </div>
+                <button onclick="checkoutLine()" class="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-md">
+                    <i class="fa-brands fa-line text-xl"></i> ส่งรายการจองผ่าน Line แอดมิน
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // รวมรูปภาพเสื้อผ้ายอดนิยมใหม่ของคุณทั้ง 7 รูป พร้อมราคาคละ 250-499 บาท
+        const products = [
+            {
+                id: 1,
+                name: "White Glamour halter Neck Dress",
+                category: "trending",
+                categoryName: "เสื้อผ้ายอดนิยม",
+                price: 390,
+                image: "dfefc6b9-9648-49a8-90a6-c9e20aee9b10.jpg",
+                rating: 4.9,
+                reviews: 28
+            },
+            {
+                id: 2,
+                name: "Chic Tweed Vest & Shorts Set",
+                category: "trending",
+                categoryName: "เสื้อผ้ายอดนิยม",
+                price: 450,
+                image: "c58df8ed-44a1-4c51-9123-d304a5921fba.jpg",
+                rating: 5.0,
+                reviews: 34
+            },
+            {
+                id: 3,
+                name: "Luxury Lace Corset Party Dress",
+                category: "trending",
+                categoryName: "เสื้อผ้ายอดนิยม",
+                price: 499,
+                image: "cd9f4344-9c77-4f69-b3fe-0ebf2f55ed1f.jpg",
+                rating: 4.9,
+                reviews: 42
+            },
+            {
+                id: 4,
+                name: "Soft Ruffle Halter Dress",
+                category: "trending",
+                categoryName: "เสื้อผ้ายอดนิยม",
+                price: 350,
+                image: "cbee96be-1ccd-42c1-9efe-b911016cbf36.jpg",
+                rating: 4.8,
+                reviews: 19
+            },
+            {
+                id: 5,
+                name: "Summer Chic Crop Top & Mini Skirt",
+                category: "trending",
+                categoryName: "เสื้อผ้ายอดนิยม",
+                price: 290,
+                image: "4cbc971e-8bac-47b0-bc1d-2cd3aaa268a7.jpg",
+                rating: 4.7,
+                reviews: 22
+            },
+            {
+                id: 6,
+                name: "Vintage Silk Tiered Mini Dress",
+                category: "trending",
+                categoryName: "เสื้อผ้ายอดนิยม",
+                price: 320,
+                image: "1dcf9a69-ce2d-4abc-959b-7b561d010874.jpg",
+                rating: 4.9,
+                reviews: 31
+            },
+            {
+                id: 7,
+                name: "Elegance Satin Slit Evening Dress",
+                category: "trending",
+                categoryName: "เสื้อผ้ายอดนิยม",
+                price: 480,
+                image: "c9c13f2f-b946-4598-9037-f66c47e0d7b6.jpg",
+                rating: 5.0,
+                reviews: 56
+            },
+            // ชุดเดรสทั่วไปเพิ่มเติม
+            {
+                id: 8,
+                name: "Rose Pink Cocktail Dress",
+                category: "dress",
+                categoryName: "ชุดเดรสออกงาน",
+                price: 450,
+                image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&q=80&w=800",
+                rating: 4.8,
+                reviews: 15
+            },
+            {
+                id: 9,
+                name: "Pastel Blue Summer Set",
+                category: "set",
+                categoryName: "ชุดเซ็ตแฟชั่น",
+                price: 390,
+                image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=800",
+                rating: 4.7,
+                reviews: 18
+            },
+            {
+                id: 10,
+                name: "Cafe Vibe White Dress",
+                category: "casual",
+                categoryName: "ชุดคาเฟ่ / เดท",
+                price: 280,
+                image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800",
+                rating: 4.9,
+                reviews: 29
+            }
+        ];
+
+        let cart = [];
+        let selectedProduct = null;
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-stone-400">ไม่พบสินค้าในหมวดหมู่นี้</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-xl transition group flex flex-col justify-between";
+                card.innerHTML = `
+                    <div class="relative aspect-[4/5] overflow-hidden bg-stone-100 cursor-pointer" onclick="openModal(${p.id})">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-stone-900 text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                            ${p.categoryName}
+                        </span>
+                        <div class="absolute bottom-3 right-3 bg-stone-900/80 backdrop-blur-md text-white text-xs font-semibold px-2.5 py-1 rounded-lg">
+                            ฿${p.price} / 3 วัน
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-1 justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center gap-1 text-xs text-amber-500 mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="font-bold text-stone-700">${p.rating}</span>
+                                <span class="text-stone-400">(${p.reviews} รีวิว)</span>
+                            </div>
+                            <h3 onclick="openModal(${p.id})" class="font-bold text-stone-900 text-base hover:text-bunny-600 transition cursor-pointer line-clamp-1">${p.name}</h3>
+                        </div>
+                        <button onclick="openModal(${p.id})" class="w-full bg-stone-100 hover:bg-bunny-600 hover:text-white text-stone-800 font-semibold py-2.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-calendar-days"></i> เลือกไซส์และจองชุด
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.className = "category-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap bg-stone-100 hover:bg-bunny-100 hover:text-bunny-700 text-stone-700 transition";
+            });
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) {
+                activeBtn.className = "category-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap bg-stone-900 text-white transition shadow-sm";
+            }
+            renderProducts(category);
+        }
+
+        function openModal(id) {
+            selectedProduct = products.find(p => p.id === id);
+            if (!selectedProduct) return;
+
+            document.getElementById('modal-img').src = selectedProduct.image;
+            document.getElementById('modal-category').innerText = selectedProduct.categoryName;
+            document.getElementById('modal-title').innerText = selectedProduct.name;
+            document.getElementById('modal-price').innerText = `฿${selectedProduct.price} / 3 วัน`;
+            
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('rental-date').valueAsDate = tomorrow;
+
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+            renderCartItems();
+        }
+
+        function addToCart(event) {
+            event.preventDefault();
+            const size = document.getElementById('size-select').value;
+            const date = document.getElementById('rental-date').value;
+
+            cart.push({
+                ...selectedProduct,
+                size,
+                date,
+                cartId: Date.now()
+            });
+
+            closeModal();
+            updateCartBadge();
+            toggleCart();
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateCartBadge();
+            renderCartItems();
+        }
+
+        function updateCartBadge() {
+            document.getElementById('cart-badge').innerText = cart.length;
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-stone-400">ตะกร้าชุดเช่าของคุณว่างเปล่า</div>`;
+                document.getElementById('cart-total').innerText = '฿0';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-4 p-3 bg-stone-50 rounded-2xl border border-stone-200/60";
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-20 object-cover rounded-xl">
+                    <div class="flex-1">
+                        <h4 class="font-bold text-stone-900 text-sm line-clamp-1">${item.name}</h4>
+                        <p class="text-xs text-stone-500">ไซส์: ${item.size} | วันใช้งาน: ${item.date}</p>
+                        <p class="text-bunny-600 font-bold text-sm mt-1">฿${item.price}</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.cartId})" class="text-stone-400 hover:text-red-500 p-2 transition">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('cart-total').innerText = `฿${total}`;
+        }
+
+        function checkoutLine() {
+            if (cart.length === 0) {
+                alert('กรุณาเลือกชุดใส่ตะกร้าก่อนทำการจองครับ');
+                return;
+            }
+            let message = "สวัสดีค่ะ สนใจจองชุดเช่า Bunny Rental ดังนี้คะ:\n";
+            cart.forEach((item, index) => {
+                message += `\n${index + 1}. ${item.name}\n- ไซส์: ${item.size}\n- วันใช้งาน: ${item.date}\n- ราคาเช่า: ฿${item.price}`;
+            });
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            message += `\n\nยอดรวมทั้งหมด: ฿${total} บาท`;
+
+            const encoded = encodeURIComponent(message);
+            window.open(`https://line.me/R/msg/text/?${encoded}`, '_blank');
+        }
+
+        // Initialize grid on load
+        renderProducts('all');
+    </script>
+</body>
+</html>
